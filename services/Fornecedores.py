@@ -11,7 +11,7 @@ class Fornecedores(Conexao):
             cursor.execute(query_sql, valores)
             self.conexao.commit()
 
-            if cursor.rowcount == 0:
+            if cursor.rowcount < 1:
                 return 0
 
             return cursor.rowcount
@@ -26,9 +26,7 @@ class Fornecedores(Conexao):
             resultado = cursor.fetchall()
 
             if len(resultado) == 0:
-                return json.dumps({
-                    "mensagem": "Nenhum dado para exibir"
-                })
+                return 0
 
             dados_json = {}
             for data in resultado:
@@ -44,5 +42,35 @@ class Fornecedores(Conexao):
         except Exception as e:
             return e
 
+    def selecionarPorId(self, id):
+        cursor = self.conexao.cursor()
+        try:
+            query_sql = f"SELECT * FROM fornecedor WHERE id = {id}"
+            cursor.execute(query_sql)
+            result = cursor.fetchall()
+            data_json = {}
+            for dado in result:
+                data_json.update({
+                    "id": dado[0],
+                    "razaosocial": dado[1],
+                    "nomefantasia": dado[2],
+                    "cnpj": dado[3],
+                    "telefone": int(dado[4])
+                })
+            return json.dumps(data_json)
+        except Exception as e:
+            return e
 
-        # DESAFIO - Façam os métodos atualizarFornecedor e selecionarFornecedorPorId
+    def atualizarFornecedor(self, data, id):
+        cursor = self.conexao.cursor()
+        try:
+            query_sql = f"UPDATE fornecedor SET {data} WHERE id = {id}"
+            cursor.execute(query_sql)
+            self.conexao.commit()
+
+            if cursor.rowcount < 1:
+                return 0
+
+            return cursor.rowcount
+        except Exception as e:
+            return e

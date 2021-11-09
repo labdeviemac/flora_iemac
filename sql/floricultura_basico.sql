@@ -12,26 +12,26 @@ CREATE TABLE `flores` (
 );
 
 CREATE TABLE `especie` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `especie` varchar(80),
-  `tipo_adubo` varchar(50),
-  `tempo_vida` int,
-  `intervalo_agua` int,
-  `observacoes_especie` tinytext,
-  `fornecedor` int
+  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT, -- f[0]
+  `especie` varchar(80), -- f[1]
+  `tipo_adubo` varchar(50), -- f[2]
+  `tempo_vida` int, -- f[3]
+  `intervalo_agua` int, -- f[4]
+  `observacoes_especie` tinytext,  -- f[5]
+  `fornecedor` int  -- f[6]
 );
 
-CREATE TABLE `fornecedor` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `razao_social` varchar(150),
-  `nome_fantasia` varchar(150),
-  `cnpj` varchar(60),
-  `telefone` int
+CREATE TABLE `fornecedor (
+  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT, -- f[7]
+  `razao_social` varchar(150), -- f[8]
+  `nome_fantasia` varchar(150), -- f[9]
+  `cnpj` varchar(60), -- f[10]
+  `telefone` int -- f[11]
 );
 
 CREATE TABLE `categoria` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `descricao_categoria` varchar(120)
+  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT, -- f[0]
+  `descricao_categoria` varchar(120) -- f[1]
 );
 
 ALTER TABLE `flores` ADD FOREIGN KEY (`especie`) REFERENCES `especie` (`id`);
