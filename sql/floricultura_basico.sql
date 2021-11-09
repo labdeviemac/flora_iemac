@@ -21,7 +21,7 @@ CREATE TABLE `especie` (
   `fornecedor` int  -- f[6]
 );
 
-CREATE TABLE `fornecedor (
+CREATE TABLE `fornecedor` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT, -- f[7]
   `razao_social` varchar(150), -- f[8]
   `nome_fantasia` varchar(150), -- f[9]

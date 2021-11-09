@@ -32,5 +32,6 @@ class Especie(Conexao):
                 data_json.update({
                     # DESAFIO
                 })
+            return json.dumps(data_json)
         except Exception as e:
             return e
