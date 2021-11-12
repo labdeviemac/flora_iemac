@@ -38,6 +38,8 @@ CREATE TABLE `categoria` (
   `descricao_categoria` varchar(120) -- f[1]
 );
 
+UPDATE categoria SET descricao_categoria = 'Flores Artificiais' WHERE id = 1
+
 ALTER TABLE `flores` ADD FOREIGN KEY (`especie`) REFERENCES `especie` (`id`);
 
 ALTER TABLE `flores` ADD FOREIGN KEY (`categoria`) REFERENCES `categoria` (`id`);

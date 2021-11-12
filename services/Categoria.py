@@ -4,7 +4,7 @@ import json
 
 class Categoria(Conexao):
 
-    def inserirCategoria(self, values):
+    def inserirCategoria(self, values: tuple) -> int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = "INSERT INTO categoria VALUES (null, %s)"
@@ -18,7 +18,7 @@ class Categoria(Conexao):
         except Exception as e:
             return e
 
-    def listarCategorias(self):
+    def listarCategorias(self) -> dict | Exception | int:
         cursor = self.conexao.cursor()
         try:
             query_sql = "SELECT * FROM categoria"
@@ -36,7 +36,7 @@ class Categoria(Conexao):
                         "descricaocategoria": dado[1]
                     }
                 })
-            return json.dumps(dados_json)
+            return dados_json
         except Exception as e:
             return e
 
