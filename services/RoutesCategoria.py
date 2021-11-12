@@ -103,7 +103,7 @@ class CategoriaUpdateRoute(Resource):
 
             return {
                        "sucesso": True,
-                       "mensagem": "Salvo com sucesso!"
+                       "mensagem": "Atualizado com sucesso!"
                    }, 200
         except Exception as e:
             return {
