@@ -51,10 +51,10 @@ class Flores(Conexao):
     def listarFloresPorId(self, id: int) -> dict | Exception | int:
         cursor = self.conexao.cursor()
         try:
-            query_sql = "SELECT * FROM flores as f " \
-                        "JOIN especie AS e ON e.id = f.especie" \
-                        "JOIN categoria AS c ON c.id = f.categoria" \
-                        "WHERE f.id = {id}"
+            query_sql = f"SELECT * FROM flores as f " \
+                        f"JOIN especie AS e ON e.id = f.especie" \
+                        f"JOIN categoria AS c ON c.id = f.categoria" \
+                        f"WHERE f.id = {id}"
             cursor.execute(query_sql)
             result = cursor.fetchall()
 
