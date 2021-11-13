@@ -5,7 +5,7 @@ SELECT * FROM flores as f
 JOIN especie as e ON e.id = f.especie
 JOIN categoria as c ON c.id = f.categoria;
 
-CREATE TABLE `f                                                                                     lores` (
+CREATE TABLE `flores` (                                                                               lores` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `descricao` varchar(80),
   `quantidade` int,
