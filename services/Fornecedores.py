@@ -1,10 +1,9 @@
-from services.Conexao import Conexao
-import json
+from connection.Conexao import Conexao
 
 
 class Fornecedores(Conexao):
 
-    def inserirFornecedor(self, valores):
+    def inserirFornecedor(self, valores: tuple) -> int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = "INSERT INTO fornecedor VALUES (null, %s, %s, %s, %s)"
@@ -18,7 +17,7 @@ class Fornecedores(Conexao):
         except Exception as e:
             return e
 
-    def listarFornecedores(self):
+    def listarFornecedores(self) -> dict | int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = "SELECT * FROM fornecedor"
@@ -38,11 +37,11 @@ class Fornecedores(Conexao):
                         "telefone_contato": data[4]
                     }
                 })
-            return json.dumps(dados_json)
+            return dados_json
         except Exception as e:
             return e
 
-    def selecionarPorId(self, id):
+    def selecionarPorId(self, id: int) -> dict | Exception | int:
         cursor = self.conexao.cursor()
         try:
             query_sql = f"SELECT * FROM fornecedor WHERE id = {id}"
@@ -57,11 +56,11 @@ class Fornecedores(Conexao):
                     "cnpj": dado[3],
                     "telefone": int(dado[4])
                 })
-            return json.dumps(data_json)
+            return data_json
         except Exception as e:
             return e
 
-    def atualizarFornecedor(self, data, id):
+    def atualizarFornecedor(self, data: str, id: int) -> int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = f"UPDATE fornecedor SET {data} WHERE id = {id}"

@@ -1,5 +1,4 @@
-from services.Conexao import Conexao
-import json
+from connection.Conexao import Conexao
 
 
 class Categoria(Conexao):
@@ -40,7 +39,7 @@ class Categoria(Conexao):
         except Exception as e:
             return e
 
-    def listarCategoriaPorId(self, id):
+    def listarCategoriaPorId(self, id: int) -> int | dict | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = f"SELECT * FROM categoria WHERE id = {id}"
@@ -56,11 +55,11 @@ class Categoria(Conexao):
                     "id": dado[0],
                     "descricaocategoria": dado[1]
                 })
-            return json.dumps(dados_json)
+            return dados_json
         except Exception as e:
             return e
 
-    def atualizarCategoria(self, dados, id):
+    def atualizarCategoria(self, dados: str, id: int) -> int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = f"UPDATE categoria SET {dados} WHERE id = {id}"
@@ -74,7 +73,7 @@ class Categoria(Conexao):
         except Exception as e:
             return e
 
-    def deletarCategoria(self, id):
+    def deletarCategoria(self, id: int) -> int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = f"DELETE categoria WHERE id = {id}"

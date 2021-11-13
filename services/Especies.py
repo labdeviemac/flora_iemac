@@ -1,9 +1,9 @@
-from services.Conexao import Conexao
-import json
+from connection.Conexao import Conexao
+
 
 class Especie(Conexao):
 
-    def inserirEspecie(self, data):
+    def inserirEspecie(self, data: tuple) -> int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = "INSERT INTO especie VALUES (null, %s, %s, %s, %s, %s, %s)"
@@ -17,7 +17,7 @@ class Especie(Conexao):
         except Exception as e:
             return e
 
-    def listarEspecies(self):
+    def listarEspecies(self) -> int | dict | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = "SELECT * FROM especie as e JOIN fornecedor as f on f.id = e.fornecedor"
@@ -43,11 +43,11 @@ class Especie(Conexao):
                         "telefonefornecedor": data[11]
                     }
                 })
-            return json.dumps(data_json)
+            return data_json
         except Exception as e:
             return e
 
-    def listarEspeciePorId(self, id):
+    def listarEspeciePorId(self, id: int) -> dict | int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = f"SELECT * FROM especie as e JOIN fornecedor as f on f.id = e.fornecedor WHERE e.id = {id}"
@@ -72,11 +72,11 @@ class Especie(Conexao):
                         "cnpj": data[10],
                         "telefonefornecedor": data[11]
                 })
-            return json.dumps(data_json)
+            return data_json
         except Exception as e:
             return e
 
-    def atualizarEspecie(self, dados, id):
+    def atualizarEspecie(self, dados: str, id: int) -> int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = f"UPDATE especie SET {dados} WHERE id = {id}"
@@ -90,7 +90,7 @@ class Especie(Conexao):
         except Exception as e:
             return e
 
-    def deletarEspecie(self, id):
+    def deletarEspecie(self, id: int) -> int | Exception:
         cursor = self.conexao.cursor()
         try:
             query_sql = f"DELETE FROM especie WHERE id = {id}"
