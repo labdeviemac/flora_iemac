@@ -1,18 +1,20 @@
 from flask import jsonify
-from flask_restful import Resource, reqparse
-from services.Fornecedores import Fornecedores
 from ast import literal_eval
+from flask_restful import Resource, reqparse
+from services.Flores import Flores
 
 
-class FornecedorUpdatePatchRoute(Resource):
+class FloresUpdatePatchRoute(Resource):
 
     def patch(self, id: int):
         try:
             parametros = reqparse.RequestParser()
-            parametros.add_argument('razao_social', type=str, required=False)
-            parametros.add_argument('nome_fantasia', type=str, required=False)
-            parametros.add_argument('cnpj', type=str, required=False)
-            parametros.add_argument('telefone', type=str, required=False)
+            parametros.add_argument('descricao', type=str, required=False)
+            parametros.add_argument('quantidade', type=int, required=False)
+            parametros.add_argument('valor_unit', type=float, required=False)
+            parametros.add_argument('valor_buque', type=float, required=False)
+            parametros.add_argument('especie', type=int, required=False)
+            parametros.add_argument('categoria', type=int, required=False)
 
             args = parametros.parse_args()
             dicion_args = dict(args)
@@ -22,8 +24,8 @@ class FornecedorUpdatePatchRoute(Resource):
             for chave, valor in values.items():
                 string_dados += f"{chave} = '{valor}', "
 
-            fornecedores = Fornecedores()
-            resultado_update = fornecedores.atualizarFornecedor(string_dados, id)
+            flores = Flores()
+            resultado_update = flores.atualizarFlores(string_dados, id)
 
             if resultado_update == 0:
                 return {
@@ -43,21 +45,24 @@ class FornecedorUpdatePatchRoute(Resource):
                    }, 500
 
 
-class FornecedorInsertRoute(Resource):
+class FloresInsertRoute(Resource):
 
     def post(self):
         try:
             parametros = reqparse.RequestParser()
-            parametros.add_argument('razao_social', type=str, required=False)
-            parametros.add_argument('nome_fantasia', type=str, required=False)
-            parametros.add_argument('cnpj', type=str, required=False)
-            parametros.add_argument('telefone', type=str, required=False)
+            parametros.add_argument('descricao', type=str, required=False)
+            parametros.add_argument('quantidade', type=int, required=False)
+            parametros.add_argument('valor_unit', type=float, required=False)
+            parametros.add_argument('valor_buque', type=float, required=False)
+            parametros.add_argument('especie', type=int, required=False)
+            parametros.add_argument('categoria', type=int, required=False)
 
             args = parametros.parse_args()
-            dados = (args["razao_social"], args["nome_fantasia"], args["cnpj"], args["telefone"])
+            dados = (args["descricao"], args["quantidade"], args["valor_unit"], args["valor_buque"],
+                     args["especie"], args["categoria"])
 
-            fornecedor = Fornecedores()
-            resultado_insert = fornecedor.inserirFornecedor(dados)
+            flores = Flores()
+            resultado_insert = flores.inserirFlores(dados)
 
             if resultado_insert == 0:
                 return {
@@ -78,12 +83,12 @@ class FornecedorInsertRoute(Resource):
                    }, 500
 
 
-class FornecedorListRoute(Resource):
+class FloresListRoute(Resource):
 
     def get(self):
         try:
-            fornecedor = Fornecedores()
-            resultset = fornecedor.listarFornecedores()
+            flores = Flores()
+            resultset = flores.listarFlores()
 
             if resultset == 0:
                 return {
@@ -100,17 +105,17 @@ class FornecedorListRoute(Resource):
                    }, 500
 
 
-class FornecedorListByIdRoute(Resource):
+class FloresListByIdRoute(Resource):
 
     def get(self, id):
         try:
-            fornecedor = Fornecedores()
-            resultset = fornecedor.selecionarPorId(id)
+            flores = Flores()
+            resultset = flores.listarFloresPorId(id)
 
             if resultset == 0:
                 return {
                            "sucesso": False,
-                           "mensagem": "Fornecedor não encontrado"
+                           "mensagem": "Flor não encontrada"
                        }, 404
 
             return jsonify(literal_eval(resultset))
@@ -122,22 +127,25 @@ class FornecedorListByIdRoute(Resource):
                    }, 500
 
 
-class FornecedorUpdateRoute(Resource):
+class FloresUpdateRoute(Resource):
 
     def put(self, id):
         try:
             parametros = reqparse.RequestParser()
-            parametros.add_argument('razao_social', type=str, required=False)
-            parametros.add_argument('nome_fantasia', type=str, required=False)
-            parametros.add_argument('cnpj', type=str, required=False)
-            parametros.add_argument('telefone', type=str, required=False)
+            parametros.add_argument('descricao', type=str, required=False)
+            parametros.add_argument('quantidade', type=int, required=False)
+            parametros.add_argument('valor_unit', type=float, required=False)
+            parametros.add_argument('valor_buque', type=float, required=False)
+            parametros.add_argument('especie', type=int, required=False)
+            parametros.add_argument('categoria', type=int, required=False)
 
             argumentos = parametros.parse_args()
-            valores = f"razao_social = '{argumentos['razao_social']}', nome_fantasia = '{argumentos['nome_fantasia']}'," \
-                      f"cnpj = '{argumentos['cnpj']}', telefone = {argumentos['telefone']}"
+            valores = f"descricao = '{argumentos['descricao']}', quantidade = {argumentos['quantidade']}, " \
+                      f"valor_unit = {argumentos['valor_unit']}, valor_buque = {argumentos['valor_buque']}," \
+                      f"especie = {argumentos['especie']}, categoria = {argumentos['categoria']}"
 
-            fornecedor = Fornecedores()
-            resultado_update = fornecedor.atualizarFornecedor(valores, id)
+            flores = Flores()
+            resultado_update = flores.atualizarFlores(valores, id)
 
             if resultado_update == 0:
                 return {

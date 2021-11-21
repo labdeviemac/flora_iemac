@@ -1,9 +1,10 @@
+from flask import jsonify
 from connection.Conexao import Conexao
 
 
 class Flores(Conexao):
 
-    def inserirFlores(self, dados: tuple) -> int | Exception:
+    def inserirFlores(self, dados):
         cursor = self.conexao.cursor()
         try:
             query_sql = "INSERT INTO flores VALUES (null, %s, %s, %s, %s, %s, %s)"
@@ -16,7 +17,7 @@ class Flores(Conexao):
         except Exception as e:
             return e
 
-    def listarFlores(self) -> int | Exception | dict:
+    def listarFlores(self):
         cursor = self.conexao.cursor()
         try:
             query_sql = "SELECT * FROM flores as f " \
@@ -44,11 +45,11 @@ class Flores(Conexao):
                         "descricaoCategoria": data[15],
                     }
                 })
-            return data_json
+            return jsonify(data_json)
         except Exception as e:
             return e
 
-    def listarFloresPorId(self, id: int) -> dict | Exception | int:
+    def listarFloresPorId(self, id):
         cursor = self.conexao.cursor()
         try:
             query_sql = f"SELECT * FROM flores as f " \
@@ -77,11 +78,11 @@ class Flores(Conexao):
                         "descricaoCategoria": data[15],
                     }
                 })
-            return data_json
+            return jsonify(data_json)
         except Exception as e:
             return e
 
-    def atualizarFlores(self, dados: str, id: int) -> int | Exception:
+    def atualizarFlores(self, dados, id):
         cursor = self.conexao.cursor()
         try:
             query_sql = f"UPDATE flores SET {dados} WHERE id = {id}"

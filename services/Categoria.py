@@ -1,9 +1,10 @@
+from flask import jsonify
 from connection.Conexao import Conexao
 
 
 class Categoria(Conexao):
 
-    def inserirCategoria(self, values: tuple) -> int | Exception:
+    def inserirCategoria(self, values):
         cursor = self.conexao.cursor()
         try:
             query_sql = "INSERT INTO categoria VALUES (null, %s)"
@@ -17,7 +18,7 @@ class Categoria(Conexao):
         except Exception as e:
             return e
 
-    def listarCategorias(self) -> dict | Exception | int:
+    def listarCategorias(self):
         cursor = self.conexao.cursor()
         try:
             query_sql = "SELECT * FROM categoria"
@@ -35,11 +36,11 @@ class Categoria(Conexao):
                         "descricaocategoria": dado[1]
                     }
                 })
-            return dados_json
+            return jsonify(dados_json)
         except Exception as e:
             return e
 
-    def listarCategoriaPorId(self, id: int) -> int | dict | Exception:
+    def listarCategoriaPorId(self, id):
         cursor = self.conexao.cursor()
         try:
             query_sql = f"SELECT * FROM categoria WHERE id = {id}"
@@ -55,11 +56,11 @@ class Categoria(Conexao):
                     "id": dado[0],
                     "descricaocategoria": dado[1]
                 })
-            return dados_json
+            return jsonify(dados_json)
         except Exception as e:
             return e
 
-    def atualizarCategoria(self, dados: str, id: int) -> int | Exception:
+    def atualizarCategoria(self, dados, id):
         cursor = self.conexao.cursor()
         try:
             query_sql = f"UPDATE categoria SET {dados} WHERE id = {id}"
@@ -68,12 +69,12 @@ class Categoria(Conexao):
 
             if cursor.rowcount < 1:
                 return 0
-            
+
             return cursor.rowcount
         except Exception as e:
             return e
 
-    def deletarCategoria(self, id: int) -> int | Exception:
+    def deletarCategoria(self, id):
         cursor = self.conexao.cursor()
         try:
             query_sql = f"DELETE categoria WHERE id = {id}"
@@ -86,5 +87,4 @@ class Categoria(Conexao):
             return cursor.rowcount
         except Exception as e:
             return e
-
 

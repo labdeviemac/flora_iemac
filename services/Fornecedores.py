@@ -1,9 +1,10 @@
+from flask import jsonify
 from connection.Conexao import Conexao
 
 
 class Fornecedores(Conexao):
 
-    def inserirFornecedor(self, valores: tuple) -> int | Exception:
+    def inserirFornecedor(self, valores):
         cursor = self.conexao.cursor()
         try:
             query_sql = "INSERT INTO fornecedor VALUES (null, %s, %s, %s, %s)"
@@ -17,7 +18,7 @@ class Fornecedores(Conexao):
         except Exception as e:
             return e
 
-    def listarFornecedores(self) -> dict | int | Exception:
+    def listarFornecedores(self):
         cursor = self.conexao.cursor()
         try:
             query_sql = "SELECT * FROM fornecedor"
@@ -37,11 +38,11 @@ class Fornecedores(Conexao):
                         "telefone_contato": data[4]
                     }
                 })
-            return dados_json
+            return jsonify(dados_json)
         except Exception as e:
             return e
 
-    def selecionarPorId(self, id: int) -> dict | Exception | int:
+    def selecionarPorId(self, id):
         cursor = self.conexao.cursor()
         try:
             query_sql = f"SELECT * FROM fornecedor WHERE id = {id}"
@@ -56,11 +57,11 @@ class Fornecedores(Conexao):
                     "cnpj": dado[3],
                     "telefone": int(dado[4])
                 })
-            return data_json
+            return jsonify(data_json)
         except Exception as e:
             return e
 
-    def atualizarFornecedor(self, data: str, id: int) -> int | Exception:
+    def atualizarFornecedor(self, data, id):
         cursor = self.conexao.cursor()
         try:
             query_sql = f"UPDATE fornecedor SET {data} WHERE id = {id}"
